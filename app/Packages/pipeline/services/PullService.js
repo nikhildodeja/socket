@@ -19,7 +19,6 @@ class PullService {
         this.pipeline.produce(message);
     }
 
-
     async getRoom () {
         const rooms = await Room.aggregate([
             {

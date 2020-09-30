@@ -2,35 +2,34 @@
     <head>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js" integrity="sha512-v8ng/uGxkge3d1IJuEo6dJP8JViyvms0cly9pnbfRxT6/31c3dRWxIiwGnMSWwZjHKOuY3EVmijs7k1jz/9bLA==" crossorigin="anonymous"></script>
         <script>
-            const socket = io('http://localhost:3333/');
-            socket.on('connect', function(data) {
-                console.log('connect');
+            const socket = io('http://127.0.0.1:3333/');
+            socket.on('connects', function(data) {
+                console.log('onconnect --- ', data)
                 socket.emit('deviceId', 
                     { deviceId: "Nikhil_Device_1", user: "Nikhil" }
-                );                
-            })
+                );
+            });
 
             socket.on('fetchData', function(data) {
+                console.log('fetchdata --- ', data)
                 let message = {};
                 message.type = 'pull';            
                 message.user = 'Nikhil';
                 message.fetch = data;                
                 socket.emit('pull', message);
             });
-            
-            // setTimeout(function(){                
-            //     socket.emit('message', {d: "hello"});
-            //     socket.emit('customMessage', {d: "hello"});
-            // }, 5000);
 
-            // socket.on('connect', function(data) {
-            //     console.log('connect emit --- ');
-            //     socket.emit('deviceId', { deviceId: "myDeviceId" });
-            // });
-            
-            // socket.on('customMessage', function(data) {
-            //     console.log('customMessage---', data);
-            // });
+            socket.on('room', function(data) {
+                let message = {
+                    room: 'Nikhil_Sameer',
+                    data: {
+                        msg: 'helo'
+                    },
+                    type: 'text',
+                    uuid: 'uuid_1'                    
+                }            
+               socket.emit('message', message);
+            });
         </script>    
     </head>
 </html>

@@ -1,5 +1,6 @@
 const DeviceService = require('../services/DeviceService');
 const PullService = require('../services/PullService');
+const MessageService = require('../services/MessageService');
 class Pipeline {
 
     constructor (kafka) {
@@ -54,7 +55,7 @@ class Pipeline {
 
     consume () {
         const that = this;
-        this.consumer.on('message', async function(kafkaMessage) {
+        this.consumer.on('message', async function(kafkaMessage) {            
             const message = JSON.parse(kafkaMessage.value);            
             const type = message.type;            
             switch (type) {
@@ -70,7 +71,11 @@ class Pipeline {
                     break;                
                 case 'pull':
                     const PullSer = new PullService(that, message);
-                    await PullSer.process();
+                    await PullSer.process();                    
+                    break;
+                case 'message': 
+                    const MessageSer = new MessageService (that, message);
+                    await MessageSer.process();
                     break;
             }
         });

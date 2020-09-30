@@ -1,7 +1,3 @@
-// 'use strict'
-// const HighLevelProducer = kafka.HighLevelProducer;
-// const client = new kafka.KafkaClient();
-// const producer = new HighLevelProducer(client);
 class ChatController {
     static goMessage(socket,io) {
         const Pipeline = use('Pipeline');
@@ -20,14 +16,20 @@ class ChatController {
             Pipeline.produce(message);
         });
         
-                
+        socket.on('message', function(message) {
+            let data = { room: message.room, type: 'message', subtype: message.type, uuid: message.uuid, data: message.data};
+            Pipeline.produce(data);
+        });
 
-        // setTimeout(function() {
-        //     io.to(socket.id).emit('connect', { message: 'from chat message' });            
-        // }, 2000);
-        // socket.on('disconnect', function(){
-        //     console.log('user disconnected');
-        // });
+        setTimeout(function() {
+            // io.to(socket.id).emit('connect', JSON.stringify({ message: 'from chat message' }));
+            console.log('connections')
+            socket.emit('connectS', {connect: true})
+        }, 200);
+        socket.on('disconnect', function() {
+            socket.removeAllListeners();
+            console.log('user disconnected');
+        });
     }
 
     sendToSingle (io, socketId) {
