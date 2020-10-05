@@ -3,8 +3,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js" integrity="sha512-v8ng/uGxkge3d1IJuEo6dJP8JViyvms0cly9pnbfRxT6/31c3dRWxIiwGnMSWwZjHKOuY3EVmijs7k1jz/9bLA==" crossorigin="anonymous"></script>
         <script>
             const socket = io('http://127.0.0.1:3333/');
-            socket.on('connects', function(data) {
-                console.log('onconnect --- ', data)
+            socket.on('connectS', function(data) {
                 socket.emit('deviceId', 
                     { deviceId: "Nikhil_Device_1", user: "Nikhil" }
                 );
@@ -21,15 +20,24 @@
 
             socket.on('room', function(data) {
                 let message = {
-                    room: 'Nikhil_Sameer',
+                    roomName: 'Nikhil_Kairavi_Sameer',
+                    roomId: '5f6ae1fee01c3be1c23b2393',
                     data: {
                         msg: 'helo'
                     },
                     type: 'text',
                     uuid: 'uuid_1'                    
-                }            
+                }                            
                socket.emit('message', message);
             });
+
+            socket.on('push', function (data) {
+                console.log('push', data);
+            })
+
+            socket.on('message', function(data) {
+                console.log('message --- ', data)
+            })
         </script>    
     </head>
 </html>

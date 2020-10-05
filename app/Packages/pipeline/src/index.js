@@ -57,7 +57,7 @@ class Pipeline {
         const that = this;
         this.consumer.on('message', async function(kafkaMessage) {            
             const message = JSON.parse(kafkaMessage.value);            
-            const type = message.type;            
+            const type = message.type;                    
             switch (type) {
                 case 'deviceId':
                     const deviceSer = new DeviceService(that, message);
@@ -66,7 +66,7 @@ class Pipeline {
                 case 'send':                    
                     that.send(message, message.message, message.emit);
                     break;
-                case 'emit':                    
+                case 'emit':                              
                     that.emit(message.socketIds, message.message, message.emit);
                     break;                
                 case 'pull':
@@ -86,7 +86,7 @@ class Pipeline {
     }
     
     emit (sockets, data, emit) {
-        let dt = JSON.stringify(data);
+        let dt = JSON.stringify(data);        
         for(let x in sockets) {
             this.io.to(sockets[x]).emit(emit, {message: dt});
         }

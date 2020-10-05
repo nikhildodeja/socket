@@ -22,8 +22,17 @@ class RedisStuff {
             type = 'set';
         } else {
             type = 'add';
-        }        
+        }
         return { type, record: JSON.parse(record[0]) };
+    }
+
+
+    async getHashRecord (key, user) {
+        const record = await Redis.hmget(key, user);
+        if (record[0]) {
+            return record[0];
+        }
+        return null;
     }
 
     async setHashData (key, user, data) {
@@ -46,10 +55,21 @@ class RedisStuff {
         let sockets = await this.getHashData('userDevice', user);
         sockets = sockets.record[user]
         let ret = []
+        
         for(let x in sockets) {
             ret.push(sockets[x]);
         }
+
+        if (user === 'Manish') {
+            console.log('sdf====', user, ret);
+        }
+
         return ret;
+    }
+
+    async getuserRecord (user) {
+        let record = await this.getHashRecord('userDevice', user);
+        return record;
     }
 }
 

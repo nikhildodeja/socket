@@ -16,15 +16,16 @@ class ChatController {
             Pipeline.produce(message);
         });
         
-        socket.on('message', function(message) {
-            let data = { room: message.room, type: 'message', subtype: message.type, uuid: message.uuid, data: message.data};
+        socket.on('message', function(message) {            
+            let data = { room: message.roomName, roomId: message.roomId, type: 'message', subtype: message.type, uuid: message.uuid, data: message.data};
+                                    
             Pipeline.produce(data);
         });
 
         setTimeout(function() {
             // io.to(socket.id).emit('connect', JSON.stringify({ message: 'from chat message' }));
-            console.log('connections')
-            socket.emit('connectS', {connect: true})
+            console.log('--- connections ---- ');
+            socket.emit('connectS', {connect: true});
         }, 200);
         socket.on('disconnect', function() {
             socket.removeAllListeners();

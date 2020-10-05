@@ -25,6 +25,7 @@ const providers = [
   '@adonisjs/websocket/providers/WsProvider',
   '@frubana/adonis-kafka/providers/Provider',
   '@adonisjs/redis/providers/RedisProvider',
+  '@rocketseat/adonis-bull/providers/Bull',
   Helpers.appRoot('app/Packages/pipeline/providers/Provider')
 ]
 
@@ -39,7 +40,8 @@ const providers = [
 */
 const aceProviders = [
   // '@adonisjs/lucid/providers/MigrationsProvider'
-  'lucid-mongo/providers/MigrationsProvider'
+  'lucid-mongo/providers/MigrationsProvider',
+  '@rocketseat/adonis-bull/providers/Command'
 ]
 
 /*

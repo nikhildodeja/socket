@@ -45,7 +45,7 @@ class PullService {
                     _id: 0,
                 }
             },
-        ]);
+        ]);        
         return rooms;        
     }
 

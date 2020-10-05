@@ -23,6 +23,7 @@ new Ignitor(require('@adonisjs/fold'))
   .appRoot(__dirname)
   // .wsServer()
   .preLoad('start/socket') //path of socket.js
+  .preLoad('preloads/bull') // Add This Line
   // .preLoad('start/kafka')
   .fireHttpServer()
   .catch(console.error)
